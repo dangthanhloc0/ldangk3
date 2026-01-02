@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TranslateService } from '../../app/services/translate.service';
-import { TranslatePipe } from '../../app/pipes/translate.pipe';
+import { TranslateService } from '../../services/translate.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
