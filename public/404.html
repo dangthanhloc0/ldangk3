@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script>
+        // GitHub Pages SPA routing fix
+        const path = window.location.pathname.replace(/^\/ldang2k3/, '');
+        if (path && !path.includes('.')) {
+            window.location.replace('/ldang2k3/?redirect=' + encodeURIComponent(path));
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>

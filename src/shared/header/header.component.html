@@ -1,0 +1,77 @@
+<header class="keycloak-header">
+  <!-- Main Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid navbar-container">
+      <!-- Brand/Logo -->
+      <a class="navbar-brand" routerLink="/">
+        <div><img class="img-fluid" style="max-width:80px;" src="assets/images/MyLogo.png" alt="Keycloak Logo"></div>
+      </a>
+
+      <!-- Mobile Toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Left Navigation Links -->
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              {{ 'NAVIGATION.HOME' | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin" routerLinkActive="active">
+              {{ 'NAVIGATION.ADMIN' | translate }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/docs" routerLinkActive="active">
+              {{ 'NAVIGATION.DOCUMENTATION' | translate }}
+            </a>
+          </li>
+          <li class="nav-item d-flex">
+            <a class="nav-link" routerLink="/setup" routerLinkActive="active">
+              {{ 'NAVIGATION.SETUP_GUIDE' | translate }}
+            </a>
+          </li>
+        </ul>
+
+        <!-- Right CTA Buttons -->
+        <ul class="navbar-nav ms-auto">
+          <!-- Language Switcher -->
+          <li class="nav-item dropdown language-switcher">
+            <a #languageDropdown
+               class="nav-link dropdown-toggle" 
+               href="#" 
+               id="languageDropdown" 
+               role="button"
+               data-bs-toggle="dropdown" 
+               aria-expanded="false">
+              <span class="flag-icon">🌐</span> {{ currentLanguage | uppercase }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+              <li *ngFor="let lang of availableLanguages; trackBy: trackByLang">
+                <a class="dropdown-item" 
+                   [class.active]="currentLanguage === lang"
+                   (click)="setLanguage(lang); $event.preventDefault()"
+                   href="#"
+                   style="cursor: pointer;">
+                  {{ getLanguageDisplay(lang) }}
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link button bg-primary text-white" href="https://github.com/dangthanhloc0/KeyCloackLibary.git" target="_blank">
+              {{ 'COMMON.DOWNLOAD' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>

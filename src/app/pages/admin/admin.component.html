@@ -1,0 +1,80 @@
+<div class="admin-container">
+
+  <div class="search-section">
+    <input 
+      type="text" 
+      class="search-input" 
+      [placeholder]="'ADMIN.SEARCH_PLACEHOLDER' | translate"
+      (keyup)="search($event.target.value)"
+    >
+  </div>
+
+  <!-- Categories Grid -->
+  <div class="categories-grid">
+    <div *ngFor="let category of categories" 
+         class="category-card"
+         [style.borderLeftColor]="category.color"
+         (click)="selectCategory(category.name)"
+         [class.active]="selectedCategory === category.name">
+      <div class="category-header">
+        <span class="category-icon">{{ category.icon }}</span>
+        <div class="category-info">
+          <h3>{{ category.name }}</h3>
+          <p class="count">{{ category.functions.length }} {{ 'ADMIN.FUNCTIONS' | translate }}</p>
+        </div>
+      </div>
+      <div class="functions-list" *ngIf="selectedCategory === category.name">
+        <a *ngFor="let func of category.functions"
+           routerLink="/docs"
+           (click)="$event.stopPropagation()"
+           class="function-link">
+          <span class="func-name">{{ func.name }}</span>
+          <span class="func-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="search-results" *ngIf="filteredFunctions.length > 0">
+    <h2>{{ 'ADMIN.SEARCH_RESULTS' | translate }} ({{ filteredFunctions.length }})</h2>
+    <div class="results-list">
+      <a *ngFor="let func of filteredFunctions"
+         routerLink="/docs"
+         class="result-item">
+        <div class="result-header">
+          <span class="result-name">{{ func.name }}</span>
+          <span class="result-category">{{ func.category }}</span>
+        </div>
+        <p class="result-desc">{{ getDescriptionKey(func.id) | translate }}</p>
+      </a>
+    </div>
+  </div>
+
+  <!-- All Functions View -->
+  <div class="all-functions" *ngIf="!selectedCategory && !searchQuery">
+    <!-- <h2> All Functions</h2> -->
+    <div class="functions-table">
+      <div class="table-header">
+        <div class="col-name">{{ 'ADMIN.FUNCTION_NAME' | translate }}</div>
+        <div class="col-category">{{ 'ADMIN.CATEGORY' | translate }}</div>
+        <div class="col-desc">{{ 'ADMIN.DESCRIPTION_HEADER' | translate }}</div>
+        <div class="col-action">{{ 'ADMIN.ACTION' | translate }}</div>
+      </div>
+      <div *ngFor="let category of categories">
+        <div *ngFor="let func of category.functions" class="table-row">
+          <div class="col-name">{{ func.name }}</div>
+          <div class="col-category">
+            <span class="badge" [style.backgroundColor]="category.color">
+              {{ category.icon }} {{ category.name }}
+            </span>
+          </div>
+          <div class="col-desc">{{ getDescriptionKey(func.id) | translate }}</div>
+          <div class="col-action">
+            <a routerLink="/docs" class="btn-view">{{ 'ADMIN.VIEW_DETAILS' | translate }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

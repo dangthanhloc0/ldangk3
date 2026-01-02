@@ -1,0 +1,265 @@
+<div class="api-documentation-container">
+  <!-- Header -->
+  <div class="api-header">
+    <div class="container-fluid">
+      <h1 class="display-4 fw-bold">📚 {{ 'API_DOC.TITLE' | translate }}</h1>
+      <p class="lead text-muted">{{ 'API_DOC.SUBTITLE' | translate }}</p>
+      
+      <!-- Search Bar -->
+      <div class="search-section mt-4">
+        <input 
+          type="text" 
+          class="form-control form-control-lg" 
+          [placeholder]="'API_DOC.SEARCH_PLACEHOLDER' | translate"
+          [(ngModel)]="searchQuery"
+          (input)="search()">
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <!-- Sidebar - Categories -->
+      <div class="col-lg-3">
+        <div class="categories-sidebar">
+          <h5 class="mb-3 fw-bold">📂 {{ 'API_DOC.CATEGORIES' | translate }}</h5>
+          
+          <div class="list-group">
+            <button 
+              *ngFor="let category of categories"
+              (click)="selectCategory(category.id)"
+              [class.active]="selectedCategory === category.id"
+              class="list-group-item list-group-item-action">
+              <span class="me-2">{{ category.icon }}</span>
+              {{ category.name }}
+            </button>
+          </div>
+
+          <!-- Function Count -->
+          <div class="alert alert-info mt-4">
+            <small>
+              <strong>{{ 'API_DOC.TOTAL_FUNCTIONS' | translate }}:</strong><br>
+              📂 {{ 'ADMIN.AUTHENTICATION' | translate }}: 3<br>
+              👤 {{ 'ADMIN.USER_MANAGEMENT' | translate }}: 6<br>
+              🔑 {{ 'ADMIN.ROLE_MANAGEMENT' | translate }}: 5<br>
+              🎫 {{ 'ADMIN.TOKEN_MANAGEMENT' | translate }}: 2
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-9">
+        <!-- Functions List -->
+        <div class="functions-list">
+          <h4 class="mb-4">
+            <span class="badge bg-primary">{{ getCategoryIcon(selectedCategory) }}</span>
+            {{ getCategoryName(selectedCategory) }}
+          </h4>
+
+          <div class="row">
+            <div class="col-12">
+              <div *ngIf="filteredFunctions.length === 0" class="alert alert-warning">
+                ⚠️ {{ 'API_DOC.NO_FUNCTIONS_FOUND' | translate }}
+              </div>
+
+              <div *ngFor="let func of filteredFunctions" class="function-card mb-3">
+                <div 
+                  class="card cursor-pointer"
+                  (click)="selectFunction(func)"
+                  [class.selected]="selectedFunction?.id === func.id">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div class="flex-grow-1">
+                        <h5 class="card-title text-primary fw-bold">
+                          {{ func.name }}
+                        </h5>
+                        <p class="card-text text-muted mb-0">
+                          {{ getDescription(func.id) }}
+                        </p>
+                      </div>
+                      <span class="badge bg-secondary ms-2">
+                        {{ func.category === 'authentication' ? '🔐' :
+                           func.category === 'user-management' ? '👤' :
+                           func.category === 'role-management' ? '🔑' : '🎫' }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Function Details Panel -->
+    <div *ngIf="selectedFunction" class="row mt-5">
+      <div class="col-12">
+        <div class="function-detail-panel">
+          <!-- Header -->
+          <div class="detail-header border-bottom pb-3 mb-4">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h2 class="text-primary fw-bold">{{ selectedFunction.name }}</h2>
+                <p class="text-muted lead">{{ getLongDescription(selectedFunction.id) }}</p>
+              </div>
+              <span class="badge bg-info p-2">{{ getCategoryName(selectedFunction.category) }}</span>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Parameters -->
+            <div class="col-lg-6">
+              <div class="detail-section">
+                <h5 class="fw-bold mb-3">📥 {{ 'API_DOC.PARAMETERS' | translate }}</h5>
+                
+                <div *ngIf="selectedFunction.parameters.length === 0" class="text-muted">
+                  {{ 'API_DOC.NO_PARAMETERS' | translate }}
+                </div>
+
+                <div *ngIf="selectedFunction.parameters.length > 0" class="table-responsive">
+                  <table class="table table-sm table-hover mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="width: 20%">{{ 'API_DOC.TYPE' | translate }}</th>
+                        <th style="width: 25%">Name</th>
+                        <th style="width: 40%">{{ 'API_DOC.DESCRIPTION_HEADER' | translate }}</th>
+                        <th style="width: 15%">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let param of selectedFunction.parameters">
+                        <td><code class="text-warning fw-bold">{{ param.type }}</code></td>
+                        <td><strong>{{ param.name }}</strong></td>
+                        <td>
+                          <small>{{ param.description }}</small>
+                          <div *ngIf="param.example" class="mt-1">
+                            <small class="text-success d-block">Ex: {{ param.example }}</small>
+                          </div>
+                        </td>
+                        <td>
+                          <span *ngIf="param.required" class="badge bg-danger">{{ 'API_DOC.REQUIRED' | translate }}</span>
+                          <span *ngIf="!param.required" class="badge bg-secondary">{{ 'API_DOC.OPTIONAL' | translate }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+
+            <!-- Returns -->
+            <div class="col-lg-6">
+              <div class="detail-section">
+                <h5 class="fw-bold mb-3">📤 {{ 'API_DOC.RETURN_VALUE' | translate }}</h5>
+                
+                <div class="return-box p-3 bg-light rounded">
+                  <span class="badge bg-success mb-2 d-block">{{ selectedFunction.returns.type }}</span>
+                  <p class="mb-2">{{ selectedFunction.returns.description }}</p>
+                  <details class="mt-2">
+                    <summary class="cursor-pointer fw-bold text-primary">👀 {{ 'API_DOC.VIEW_EXAMPLE' | translate }}</summary>
+                    <pre class="mt-2 bg-dark text-light p-2 rounded"><code>{{ selectedFunction.returns.example }}</code></pre>
+                    <button 
+                      (click)="copyCode(selectedFunction.returns.example)"
+                      class="btn btn-sm btn-outline-primary mt-2">
+                      📋 {{ 'API_DOC.COPY' | translate }}
+                    </button>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Codes -->
+          <div class="detail-section mt-4">
+            <h5 class="fw-bold mb-3">⚠️ {{ 'API_DOC.ERROR_CODES' | translate }}</h5>
+            
+            <div class="table-responsive">
+              <table class="table table-sm table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th>{{ 'API_DOC.ERROR_CODES' | translate }}</th>
+                    <th>{{ 'API_DOC.HTTP_STATUS' | translate }}</th>
+                    <th>{{ 'API_DOC.MEANING' | translate }}</th>
+                    <th>{{ 'API_DOC.SOLUTION' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let error of selectedFunction.errorCodes">
+                    <td><code class="text-danger fw-bold">{{ error.code }}</code></td>
+                    <td><span class="badge bg-danger">{{ error.httpStatus }}</span></td>
+                    <td>{{ getErrorMeaning(error.code) }}</td>
+                    <td><small class="text-muted">{{ getErrorSolution(error.code) }}</small></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Code Examples -->
+          <div class="detail-section mt-4">
+            <h5 class="fw-bold mb-3">💻 {{ 'API_DOC.CODE_EXAMPLES' | translate }}</h5>
+            
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="code-example mb-3">
+                  <h6 class="fw-bold bg-dark text-white p-2 rounded-top">{{ 'API_DOC.BACKEND' | translate }}</h6>
+                  <pre class="bg-light p-3 rounded-bottom"><code>{{ selectedFunction.codeExample.backend }}</code></pre>
+                  <button 
+                    (click)="copyCode(selectedFunction.codeExample.backend)"
+                    class="btn btn-sm btn-outline-primary">
+                    📋 {{ 'API_DOC.COPY_BACKEND' | translate }}
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="code-example mb-3">
+                  <h6 class="fw-bold bg-dark text-white p-2 rounded-top">{{ 'API_DOC.FRONTEND' | translate }}</h6>
+                  <pre class="bg-light p-3 rounded-bottom"><code>{{ selectedFunction.codeExample.frontend }}</code></pre>
+                  <button 
+                    (click)="copyCode(selectedFunction.codeExample.frontend)"
+                    class="btn btn-sm btn-outline-primary">
+                    📋 {{ 'API_DOC.COPY_FRONTEND' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- When to Use
+          <div class="detail-section mt-4">
+            <h5 class="fw-bold mb-3">📋 {{ 'API_DOC.WHEN_TO_USE' | translate }}</h5>
+            
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let use of selectedFunction.whenToUse; let i = index" class="list-group-item">
+                ✅ {{ getWhenToUseText(selectedFunction.id, i) }}
+              </li>
+            </ul>
+          </div> -->
+
+          <!-- Best Practices -->
+          <!-- <div class="detail-section mt-4 mb-5">
+            <h5 class="fw-bold mb-3">🏆 {{ 'API_DOC.BEST_PRACTICES' | translate }}</h5>
+            
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let practice of selectedFunction.bestPractices; let i = index" class="list-group-item">
+                💡 {{ getBestPracticeText(selectedFunction.id, i) }}
+              </li>
+            </ul>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!selectedFunction" class="row mt-5">
+      <div class="col-12 text-center py-5">
+        <h3 class="text-muted">👆 {{ 'API_DOC.SELECT_FUNCTION' | translate }}</h3>
+        <p class="text-muted">{{ 'API_DOC.VIEW_DETAILS' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>

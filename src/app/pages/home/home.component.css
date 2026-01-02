@@ -1,0 +1,391 @@
+.home-container {
+  background: #ffffff;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.hero-buttons .btn-primary {
+  background: white;
+  color: #667eea;
+  border: none;
+}
+
+.hero-buttons .btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: #f8f9ff;
+}
+
+.hero-buttons .btn-outline-primary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.hero-buttons .btn-outline-primary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #718096;
+  margin-bottom: 40px;
+}
+
+/* Feature Cards */
+.feature-card {
+  transition: all 0.3s ease;
+  border: none;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  text-align: center;
+  color: #667eea;
+}
+
+.feature-card .card-title {
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.feature-card .card-text {
+  color: #718096;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Feature List - General */
+.feature-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.feature-list li {
+  padding: 12px 0;
+  color: #2d3748;
+  font-size: 1rem;
+  line-height: 1.6;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.feature-list li:last-child {
+  border-bottom: none;
+}
+
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #667eea;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.highlight-box {
+  background: white;
+  border-left: 4px solid #667eea;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  color: #2d3748;
+}
+
+/* Features Section - Full Width */
+.features-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  padding: 30px 20px;
+  margin-top: 40px;
+}
+
+.features-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title-light {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.section-subtitle-light {
+  font-size: 1.1rem;
+  color: #718096;
+  margin-bottom: 40px;
+}
+
+/* Library Section - Full Width */
+.library-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 5px 20px;
+  margin-top: 5px;
+}
+
+.library-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.library-header {
+  text-align: center;
+}
+
+.library-icon {
+  font-size: 3.5rem;
+  display: inline-block;
+}
+
+.library-section .card-title {
+  color: white;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.library-description {
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+
+.library-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.library-section .feature-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.library-section .feature-list li {
+  padding: 12px 0;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.library-section .feature-list li:last-child {
+  border-bottom: none;
+}
+
+.library-section .feature-badge {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.library-section .highlight-box {
+  background: rgba(255, 255, 255, 0.15);
+  border-left: 4px solid rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  color: white;
+}
+
+/* Integration Section - Full Width */
+.integration-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 40px 20px;
+  margin-top: 40px;
+}
+
+.integration-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.integration-header {
+  text-align: center;
+}
+
+.integration-icon {
+  font-size: 3.5rem;
+  display: inline-block;
+}
+
+.integration-section .card-title {
+  color: #2d3748;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.integration-description {
+  color: #4a5568;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Step Cards */
+.step-card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 15px;
+}
+
+.step-title {
+  color: #2d3748;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.step-description {
+  color: #718096;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .library-section {
+    padding: 50px 20px;
+  }
+
+  .library-section .card-title {
+    font-size: 1.4rem;
+  }
+
+  .library-description {
+    font-size: 1rem;
+  }
+
+  .integration-section {
+    padding: 50px 20px;
+  }
+
+  .integration-section .card-title {
+    font-size: 1.4rem;
+  }
+
+  .step-card {
+    padding: 25px 15px;
+  }
+
+  .step-number {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+}
+

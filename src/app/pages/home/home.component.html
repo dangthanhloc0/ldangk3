@@ -1,0 +1,144 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8 mx-auto text-center">
+          <h1 class="hero-title">{{ 'HOME.WELCOME' | translate }}</h1>
+          <p class="hero-subtitle">
+            {{ 'HOME.SUBTITLE' | translate }}
+          </p>
+          <div class="hero-buttons mt-5">
+            <a routerLink="/setup" class="btn btn-primary btn-lg me-3">{{ 'HOME.GET_STARTED' | translate }}</a>
+            <a routerLink="/docs" class="btn btn-outline-primary btn-lg">{{ 'HOME.LEARN_MORE' | translate }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+  <!-- Full Width Features Section -->
+  <div class="features-section">
+    <div class="container">
+      <div class="features-content">
+        <div class="row mb-0 text-center">
+          <div class="col-12">
+            <h2 class="section-title-light">{{ 'HOME.KEY_FEATURES' | translate }}</h2>
+            <p class="section-subtitle-light">{{ 'HOME.FEATURES_SUBTITLE' | translate }}</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6" *ngFor="let feature of features">
+            <div class="card h-100 shadow-sm feature-card">
+              <div class="card-body">
+                <div class="feature-icon mb-3">{{ feature.icon }}</div>
+                <h5 class="card-title">{{ feature.title }}</h5>
+                <p class="card-text text-muted">{{ feature.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  
+  <div class="row mt-5">
+    <div class="col-12 text-center mb-4">
+      <h2 class="section-title">{{ 'HOME.KEYCLOAK_LIBRARY' | translate }}</h2>
+    </div>
+  </div>
+
+  <!-- Full Width Library Section -->
+  <div class="library-section">
+    <div class="container">
+      <div class="library-content">
+        <div class="library-header mb-5">
+          <h5 class="card-title mt-4">{{ 'HOME.LIGHTWEIGHT_FRAMEWORK' | translate }}</h5>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="library-description">
+              {{ 'HOME.LIBRARY_DESC_1' | translate }}
+            </p>
+            <p class="library-description">
+              {{ 'HOME.LIBRARY_DESC_2' | translate }}
+            </p>
+          </div>
+          <div class="col-lg-6">
+            <h6 class="library-subtitle mb-4">{{ 'HOME.DESIGNED_TO_BE' | translate }}</h6>
+            <ul class="feature-list">
+              <li><span class="feature-badge">✓</span> <strong>{{ 'HOME.EASY_TO_USE' | translate }}</strong> – {{ 'HOME.EASY_TO_USE_DESC' | translate }}</li>
+              <li><span class="feature-badge">✓</span> <strong>{{ 'HOME.DEVELOPER_FRIENDLY' | translate }}</strong> – {{ 'HOME.DEVELOPER_FRIENDLY_DESC' | translate }}</li>
+              <li><span class="feature-badge">✓</span> <strong>{{ 'HOME.TIME_SAVING' | translate }}</strong> – {{ 'HOME.TIME_SAVING_DESC' | translate }}</li>
+              <li><span class="feature-badge">✓</span> <strong>{{ 'HOME.SPRING_BOOT_READY' | translate }}</strong> – {{ 'HOME.SPRING_BOOT_READY_DESC' | translate }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="highlight-box mt-5">
+          <p class="mb-0">
+            <strong>{{ 'HOME.CONFIGURE_ONCE' | translate }}</strong> {{ 'HOME.NO_BOILERPLATE' | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Features Section (continued) -->
+  <div class="container  mt-5">
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <h2 class="section-title">{{ 'HOME.GETTING_STARTED' | translate }}</h2>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Full Width Getting Started Section -->
+  <div class="integration-section">
+    <div class="container">
+      <div class="integration-content">
+        <div class="integration-header mb-2">
+          <div class="integration-icon card-title">⚙️ {{ 'HOME.INTEGRATION_READY' | translate }}</div>
+        </div>
+        <p class="integration-description mb-5">
+          {{ 'HOME.INTEGRATION_DESC' | translate }}
+        </p>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <h6 class="step-title">{{ 'HOME.STEP_1_INSTALL' | translate }}</h6>
+              <p class="step-description">{{ 'HOME.STEP_1_DESC' | translate }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <h6 class="step-title">{{ 'HOME.STEP_2_CONFIGURE' | translate }}</h6>
+              <p class="step-description">{{ 'HOME.STEP_2_DESC' | translate }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <h6 class="step-title">{{ 'HOME.STEP_3_UPDATE' | translate }}</h6>
+              <p class="step-description">{{ 'HOME.STEP_3_DESC' | translate }}</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <h6 class="step-title">{{ 'HOME.STEP_4_DEPLOY' | translate }}</h6>
+              <p class="step-description">{{ 'HOME.STEP_4_DESC' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

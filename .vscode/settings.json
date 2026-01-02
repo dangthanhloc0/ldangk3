@@ -1,0 +1,4 @@
+{
+  "html-css-class-completion.includeGlobPattern": "**/*.css",
+  "html-css-class-completion.enableEmmetSupport": true
+}

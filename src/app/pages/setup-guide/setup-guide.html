@@ -1,0 +1,164 @@
+<div class="setup-guide-container">
+  <!-- Header -->
+  <div class="setup-header">
+    <div class="container-fluid">
+      <h1 class="display-4 fw-bold">🚀 Setup Guide</h1>
+      <p class="lead">Hướng dẫn từng bước thiết lập Keycloak authentication</p>
+      
+      <!-- Progress Bar -->
+      <div class="progress-section mt-4">
+        <div class="progress-info mb-2">
+          <span class="progress-label">Progress</span>
+          <span class="progress-percent">{{ getProgressPercentage() }}%</span>
+        </div>
+        <div class="progress" style="height: 8px;">
+          <div class="progress-bar progress-bar-animated" 
+            [style.width.%]="getProgressPercentage()"
+            role="progressbar">
+          </div>
+        </div>
+        <small class="text-muted mt-2 d-block">
+          ✅ {{ getCompletedCount() }} / {{ steps.length }} steps completed
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-5 pb-5">
+    <div class="row">
+      <!-- Steps Navigation -->
+      <div class="col-lg-3">
+        <div class="steps-sidebar">
+          <h5 class="mb-3 fw-bold">📋 Setup Steps</h5>
+          
+          <div class="steps-list">
+            <div *ngFor="let step of steps; let i = index" 
+              (click)="selectStep(i)"
+              class="step-item"
+              [class.active]="currentStep === i"
+              [class.completed]="step.completed">
+              
+              <div class="step-header">
+                <div class="step-number" [class.check]="step.completed">
+                  <span *ngIf="!step.completed">{{ step.id }}</span>
+                  <span *ngIf="step.completed" class="checkmark">✓</span>
+                </div>
+                <div class="step-info">
+                  <small>Step {{ step.id }}</small>
+                  <h6>{{ step.title }}</h6>
+                </div>
+              </div>
+              
+              <div class="step-checkbox">
+                <input type="checkbox" 
+                  [checked]="step.completed"
+                  (click)="markStepComplete(i); $event.stopPropagation()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step Content -->
+      <div class="col-lg-9">
+        <div class="step-content-panel">
+          <!-- Current Step Display -->
+          <div *ngIf="steps[currentStep]" class="step-content">
+            <div class="step-header-content border-bottom pb-4 mb-4">
+              <div class="d-flex align-items-start justify-content-between">
+                <div>
+                  <div class="step-number-large">{{ steps[currentStep].id }}</div>
+                  <h2 class="text-primary fw-bold">{{ steps[currentStep].title }}</h2>
+                  <p class="lead text-muted">{{ steps[currentStep].description }}</p>
+                </div>
+                <span class="step-icon">{{ steps[currentStep].icon }}</span>
+              </div>
+            </div>
+
+            <!-- Step Details -->
+            <div class="step-details">
+              <h5 class="fw-bold mb-3">📝 Details</h5>
+              
+              <ul class="list-group list-group-flush">
+                <li *ngFor="let detail of steps[currentStep].details" 
+                  class="list-group-item">
+                  <div class="d-flex align-items-start">
+                    <span class="me-3 text-primary fw-bold">→</span>
+                    <span>{{ detail }}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Code Blocks -->
+            <div *ngIf="steps[currentStep].codeBlocks && steps[currentStep].codeBlocks!.length > 0" 
+              class="code-blocks mt-5">
+              <h5 class="fw-bold mb-3">💻 Code Example</h5>
+              
+              <div *ngFor="let block of steps[currentStep].codeBlocks" 
+                class="code-block mb-3">
+                
+                <div class="code-header">
+                  <small class="text-muted">{{ block.lang }}</small>
+                </div>
+                
+                <pre class="code-content"><code>{{ block.code }}</code></pre>
+                
+                <button (click)="copyCode(block.code)" 
+                  class="btn btn-sm btn-outline-primary mt-2">
+                  📋 Copy Code
+                </button>
+              </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="step-navigation mt-5">
+              <button 
+                (click)="selectStep(currentStep - 1)"
+                *ngIf="currentStep > 0"
+                class="btn btn-outline-secondary">
+                ← Previous Step
+              </button>
+              
+              <div class="flex-grow-1"></div>
+              
+              <div class="step-completion">
+                <input type="checkbox" 
+                  [checked]="steps[currentStep].completed"
+                  (change)="markStepComplete(currentStep)"
+                  id="stepCheckbox">
+                <label for="stepCheckbox" class="ms-2 mb-0">
+                  {{ steps[currentStep].completed ? '✅ Completed' : 'Mark as Completed' }}
+                </label>
+              </div>
+              
+              <div class="flex-grow-1"></div>
+              
+              <button 
+                (click)="selectStep(currentStep + 1)"
+                *ngIf="currentStep < steps.length - 1"
+                class="btn btn-primary">
+                Next Step →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="info-box">
+          <h5 class="fw-bold mb-3">💡 Pro Tips</h5>
+          <ul>
+            <li>Sau khi setup xong, bạn có thể xem chi tiết API tại trang <strong>/docs</strong></li>
+            <li>Các ví dụ code được cung cấp cho cả Backend (Spring Boot) và Frontend (Angular)</li>
+            <li>Nếu có lỗi, kiểm tra lại console logs hoặc Keycloak Admin Console</li>
+            <li>Refresh token tự động mỗi 5 phút - không cần configure gì thêm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

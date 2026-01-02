@@ -1,0 +1,34 @@
+<footer class="footer mt-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <img  src="assets/images/keyCloakLogo.svg" alt="Keycloak Logo" class="img-fluid w-75">
+      </div>
+      <div class="col-md-4">
+        <h5>{{ 'FOOTER.FEATURES' | translate }}</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">{{ 'FOOTER.SINGLE_SIGN_ON' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.USER_MANAGEMENT' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.ROLE_BASED_ACCESS' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>{{ 'FOOTER.CONTACT' | translate }}</h5>
+        <p>
+          {{ 'FOOTER.EMAIL' | translate }}: <a href="mailto:dangthanhloca2@gmail.com">dangthanhloca2@gmail.com</a><br>
+          {{ 'FOOTER.PHONE' | translate }}: +84 379 001 285<br>
+          {{ 'FOOTER.FACEBOOK' | translate }}: <a href="https://www.facebook.com/angloc.149807/" target="_blank">Dang Loc</a><br>
+          {{ 'FOOTER.LINKEDIN' | translate }}: <a href="https://www.linkedin.com/in/dang-thanh-loc-15b401338/" target="_blank">Dang Thanh Loc</a><br>
+          {{ 'FOOTER.DOCUMENTATION' | translate }}: <a routerLink="/docs">{{ 'FOOTER.VIEW_DOCS' | translate }}</a>
+
+        </p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <p>&copy; {{ currentYear }}. {{ 'FOOTER.COPYRIGHT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</footer>

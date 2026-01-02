@@ -1,0 +1,9 @@
+<div class="search-box">
+  <input
+    type="text"
+    placeholder="{{'SEARCH.PLACEHOLDER' | translate}}"
+    [(ngModel)]="keyword"
+    (keyup.enter)="onSearch()"
+  />
+  <button (click)="onSearch()">{{'SEARCH.BUTTON' | translate}}</button>
+</div>
