@@ -19,6 +19,7 @@
           "options": {
             "outputPath": "docs",
             "browser": "src/main.ts",
+            "prerender": false,
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
