@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && npm run copy-dist",
-    "copy-dist": "cp -r dist/keycloak-demo/browser/* dist/keycloak-demo/",
+    "build": "ng build && node scripts/copy-dist.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
