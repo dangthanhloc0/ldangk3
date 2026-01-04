@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { TranslateService } from '../../services/translate.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 interface SetupStep {
   id: number;
@@ -11,23 +14,36 @@ interface SetupStep {
   completed: boolean;
   details?: string[];
   codeBlocks?: { lang: string; code: string }[];
+  images?: { alt: string; url: string; caption?: string }[];
 }
 
 @Component({
   selector: 'app-setup-guide',
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, SafeHtmlPipe],
   templateUrl: './setup-guide.html',
   styleUrl: './setup-guide.css',
 })
-export class SetupGuide implements OnInit {
+export class SetupGuide implements OnInit, OnDestroy {
   steps: SetupStep[] = [];
   currentStep: number = 0;
+  private destroy$ = new Subject<void>();
 
   constructor(private translateService: TranslateService) {}
 
   ngOnInit() {
     this.initializeSteps();
+    // Subscribe to language changes
+    this.translateService.currentLanguage$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.initializeSteps();
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initializeSteps() {
@@ -43,130 +59,97 @@ export class SetupGuide implements OnInit {
           this.translateService.instant('SETUP.STEP_1_DETAILS_2'),
           this.translateService.instant('SETUP.STEP_1_DETAILS_3'),
           this.translateService.instant('SETUP.STEP_1_DETAILS_4'),
-          this.translateService.instant('SETUP.STEP_1_DETAILS_5'),
-          this.translateService.instant('SETUP.STEP_1_DETAILS_6')
         ]
       },
       {
         id: 2,
         title: this.translateService.instant('SETUP.STEP_2_TITLE'),
         description: this.translateService.instant('SETUP.STEP_2_DESC'),
-        icon: '📦',
+        icon: '📥',
         completed: false,
         details: [
           this.translateService.instant('SETUP.STEP_2_DETAILS_1'),
           this.translateService.instant('SETUP.STEP_2_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_2_DETAILS_3')
-        ],
-        codeBlocks: [
-          {
-            lang: 'xml',
-            code: `<dependency>
-    <groupId>com.example</groupId>
-    <artifactId>keycloak-library</artifactId>
-    <version>1.0.0</version>
-</dependency>`
-          }
+          this.translateService.instant('SETUP.STEP_2_DETAILS_3'),
+          this.translateService.instant('SETUP.STEP_2_DETAILS_4'),
         ]
       },
       {
         id: 3,
         title: this.translateService.instant('SETUP.STEP_3_TITLE'),
         description: this.translateService.instant('SETUP.STEP_3_DESC'),
-        icon: '🐳',
+        icon: '📦',
         completed: false,
         details: [
           this.translateService.instant('SETUP.STEP_3_DETAILS_1'),
           this.translateService.instant('SETUP.STEP_3_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_3_DETAILS_3'),
-          this.translateService.instant('SETUP.STEP_3_DETAILS_4')
+          this.translateService.instant('SETUP.STEP_3_DETAILS_3')
+        ],
+        codeBlocks: [
+          {
+            lang: 'xml',
+            code: `<dependency>
+  <groupId>org.ldang.keycloack</groupId>
+  <artifactId>authz-core</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <scope>compile</scope>
+</dependency>`
+          }
         ]
       },
       {
         id: 4,
         title: this.translateService.instant('SETUP.STEP_4_TITLE'),
         description: this.translateService.instant('SETUP.STEP_4_DESC'),
-        icon: '👑',
+        icon: '🐳',
         completed: false,
         details: [
           this.translateService.instant('SETUP.STEP_4_DETAILS_1'),
           this.translateService.instant('SETUP.STEP_4_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_4_DETAILS_3')
+          this.translateService.instant('SETUP.STEP_4_DETAILS_3'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_4'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_5'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_6'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_7'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_8'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_9'),
+          this.translateService.instant('SETUP.STEP_4_DETAILS_10')
+        ],
+        images: [
+          { alt: 'Manage Realms - Click Create Realm', url: '/assets/images/img_2.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_1') },
+          { alt: 'Create Realm Dialog - Enter Name', url: '/assets/images/img_3.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_2') },
+          { alt: 'Realm Created Successfully', url: '/assets/images/img_5.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_3') },
+          { alt: 'Navigate to Clients Section', url: '/assets/images/img_6.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_4') },
+          { alt: 'Create Client Form', url: '/assets/images/img_7.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_5') },
+          // { alt: 'Client General Settings', url: '/assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_6') },
+          { alt: 'Capability Config - Enable Capabilities', url: '/assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_7') },
+          { alt: 'Login Settings - Configure URLs', url: '/assets/images/img_9.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_8') },
+          { alt: 'Credentials Tab - Copy Client Secret', url: '/assets/images/img_10.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_9') }
         ]
       },
       {
         id: 5,
         title: this.translateService.instant('SETUP.STEP_5_TITLE'),
         description: this.translateService.instant('SETUP.STEP_5_DESC'),
-        icon: '🔑',
+        icon: '🍃',
         completed: false,
         details: [
           this.translateService.instant('SETUP.STEP_5_DETAILS_1'),
           this.translateService.instant('SETUP.STEP_5_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_5_DETAILS_3'),
-          this.translateService.instant('SETUP.STEP_5_DETAILS_4'),
-          this.translateService.instant('SETUP.STEP_5_DETAILS_5'),
-          this.translateService.instant('SETUP.STEP_5_DETAILS_6'),
-          this.translateService.instant('SETUP.STEP_5_DETAILS_7')
-        ]
-      },
-      {
-        id: 6,
-        title: this.translateService.instant('SETUP.STEP_6_TITLE'),
-        description: this.translateService.instant('SETUP.STEP_6_DESC'),
-        icon: '🍃',
-        completed: false,
-        details: [
-          this.translateService.instant('SETUP.STEP_6_DETAILS_1'),
-          this.translateService.instant('SETUP.STEP_6_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_6_DETAILS_3')
+          this.translateService.instant('SETUP.STEP_5_DETAILS_3')
         ],
         codeBlocks: [
           {
             lang: 'yaml',
-            code: `keycloak:
-  server-url: http://localhost:8080
-  realm: demo-realm
-  client-id: my-app
-  client-secret: <CLIENT_SECRET_FROM_KEYCLOAK>
-  
-spring:
-  application:
-    name: keycloak-demo-backend`
+            code: `# Keycloak Server Configuration
+keycloak.domainUrl=http://localhost:8080
+keycloak.realmName={your-realm}
+keycloak.clientSecret={your-client-secret}
+keycloak.clientId={your-client-ID}
+# Admin Credentials for API Operations
+keycloak.adminUsername=admin
+keycloak.adminPassword=admin`
           }
-        ]
-      },
-      {
-        id: 7,
-        title: this.translateService.instant('SETUP.STEP_7_TITLE'),
-        description: this.translateService.instant('SETUP.STEP_7_DESC'),
-        icon: '⚛️',
-        completed: false,
-        details: [
-          this.translateService.instant('SETUP.STEP_7_DETAILS_1'),
-          this.translateService.instant('SETUP.STEP_7_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_7_DETAILS_3'),
-          this.translateService.instant('SETUP.STEP_7_DETAILS_4')
-        ],
-        codeBlocks: [
-          {
-            lang: 'bash',
-            code: `npm install keycloak-js`
-          }
-        ]
-      },
-      {
-        id: 8,
-        title: this.translateService.instant('SETUP.STEP_8_TITLE'),
-        description: this.translateService.instant('SETUP.STEP_8_DESC'),
-        icon: '✅',
-        completed: false,
-        details: [
-          this.translateService.instant('SETUP.STEP_8_DETAILS_1'),
-          this.translateService.instant('SETUP.STEP_8_DETAILS_2'),
-          this.translateService.instant('SETUP.STEP_8_DETAILS_3'),
-          this.translateService.instant('SETUP.STEP_8_DETAILS_4'),
-          this.translateService.instant('SETUP.STEP_8_DETAILS_5')
         ]
       }
     ];
@@ -192,5 +175,9 @@ spring:
 
   getProgressPercentage(): number {
     return Math.round((this.getCompletedCount() / this.steps.length) * 100);
+  }
+
+  openImageFullscreen(imageUrl: string): void {
+    window.open(imageUrl, '_blank');
   }
 }
