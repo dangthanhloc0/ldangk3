@@ -13,7 +13,7 @@ interface SetupStep {
   icon: string;
   completed: boolean;
   details?: string[];
-  codeBlocks?: { lang: string; code: string }[];
+  codeBlocks?: { lang: string; code: string; title?: string }[];
   images?: { alt: string; url: string; caption?: string }[];
 }
 
@@ -93,27 +93,40 @@ export class SetupGuide implements OnInit, OnDestroy {
         codeBlocks: [
           {
             lang: 'xml',
-            code: `<dependency>
+            title: 'pom.xml - Add these dependencies',
+            code: `<!-- Custom Keycloak Library -->
+<dependency>
+  <groupId>org.ldang.keycloack</groupId>
+  <artifactId>authz-core</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <scope>compile</scope>
+</dependency>
+
+<!-- Spring Boot OAuth2 Resource Server -->
+<dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 </dependency>
+
+<!-- Spring Boot OAuth2 Client -->
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-oauth2-client</artifactId>
 </dependency>
+
 <!-- Spring Boot Security -->
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
 
-<!-- Web -->
+<!-- Spring Boot Web -->
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 
-<!-- Lombok -->
+<!-- Lombok for code generation -->
 <dependency>
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
@@ -126,25 +139,22 @@ export class SetupGuide implements OnInit, OnDestroy {
   <artifactId>spring-boot-starter-validation</artifactId>
 </dependency>
 
+<!-- OAuth2 JOSE (JSON Object Signing and Encryption) -->
 <dependency>
   <groupId>org.springframework.security</groupId>
   <artifactId>spring-security-oauth2-jose</artifactId>
 </dependency>
+
+<!-- Jackson JSON Processing -->
 <dependency>
   <groupId>com.fasterxml.jackson.core</groupId>
   <artifactId>jackson-core</artifactId>
   <version>2.15.2</version>
 </dependency>
+
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-json</artifactId>
-</dependency>
-
-<dependency>
-  <groupId>org.ldang.keycloack</groupId>
-  <artifactId>authz-core</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <scope>compile</scope>
 </dependency>`
           }
         ]
@@ -202,6 +212,140 @@ keycloak.clientId={your-client-ID}
 keycloak.adminUsername=admin
 keycloak.adminPassword=admin`
           }
+        ]
+      },
+      {
+        id: 6,
+        title: this.translateService.instant('SETUP.STEP_6_TITLE'),
+        description: this.translateService.instant('SETUP.STEP_6_DESC'),
+        icon: '🔒',
+        completed: false,
+        details: [
+          this.translateService.instant('SETUP.STEP_6_DETAILS_1'),
+          this.translateService.instant('SETUP.STEP_6_DETAILS_2'),
+          this.translateService.instant('SETUP.STEP_6_DETAILS_3'),
+          this.translateService.instant('SETUP.STEP_6_DETAILS_4')
+        ],
+        codeBlocks: [
+          {
+            lang: 'java',
+            title: 'SecurityConfig.java - Spring Security Configuration',
+            code: `import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
+        http
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))
+                ).csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        JwtGrantedAuthoritiesConverter defaultGrantedConverter = new JwtGrantedAuthoritiesConverter();
+        defaultGrantedConverter.setAuthorityPrefix("SCOPE_");
+
+        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            Collection<String> roles = new ArrayList<>();
+
+            Object realmAccess = jwt.getClaim("realm_access");
+            if (realmAccess instanceof Map) {
+                Object r = ((Map<?, ?>) realmAccess).get("roles");
+                if (r instanceof Collection) {
+                    ((Collection<?>) r).forEach(x -> roles.add(String.valueOf(x)));
+                }
+            }
+
+            Object resourceAccess = jwt.getClaim("resource_access");
+            if (resourceAccess instanceof Map) {
+                ((Map<?, ?>) resourceAccess).forEach((client, value) -> {
+                    if (value instanceof Map) {
+                        Object rolesObj = ((Map<?, ?>) value).get("roles");
+                        if (rolesObj instanceof Collection) {
+                            ((Collection<?>) rolesObj).forEach(x -> roles.add(String.valueOf(x)));
+                        }
+                    }
+                });
+            }
+
+            Object groups = jwt.getClaim("groups");
+            if (groups instanceof Collection) {
+                ((Collection<?>) groups).forEach(x -> roles.add(String.valueOf(x)));
+            }
+
+            List<org.springframework.security.core.GrantedAuthority> authorities =
+                    roles.stream()
+                            .filter(Objects::nonNull)
+                            .map(String::valueOf)
+                            .distinct()
+                            .map(r -> "ROLE_" + r)
+                            .map(org.springframework.security.core.authority.SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList());
+
+            Collection<org.springframework.security.core.GrantedAuthority> scopeAuthorities =
+                    defaultGrantedConverter.convert(jwt);
+
+            List<org.springframework.security.core.GrantedAuthority> result = new ArrayList<>();
+            if (scopeAuthorities != null) result.addAll(scopeAuthorities);
+            result.addAll(authorities);
+
+            return result;
+        });
+
+        return converter;
+    }
+}`
+          }
+        ]
+      },
+      {
+        id: 7,
+        title: this.translateService.instant('SETUP.STEP_7_TITLE'),
+        description: this.translateService.instant('SETUP.STEP_7_DESC'),
+        icon: '🔍',
+        completed: false,
+        details: [
+          this.translateService.instant('SETUP.STEP_7_DETAILS_1'),
+          this.translateService.instant('SETUP.STEP_7_DETAILS_2'),
+          this.translateService.instant('SETUP.STEP_7_DETAILS_3'),
+          this.translateService.instant('SETUP.STEP_7_DETAILS_4')
+        ],
+        codeBlocks: [
+          {
+            lang: 'java',
+            title: 'Application.java - Add @ComponentScan',
+            code: `
+import org.springframework.context.annotation.ComponentScan;
+@ComponentScan({"org.ldang.keycloack", "com.example.test"})
+`
+          }
+        ],
+        images: [
+          { alt: 'Add ComponentScan to Application Class', url: this.getAssetUrl('assets/images/img_11.png'), caption: this.translateService.instant('SETUP.IMAGE_CAPTION_10') }
         ]
       }
     ];

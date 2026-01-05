@@ -129,8 +129,11 @@
               <div *ngFor="let block of steps[currentStep].codeBlocks" 
                 class="code-block mb-3">
                 
-                <div class="code-header">
-                  <small class="text-muted">{{ block.lang }}</small>
+                <div class="code-header d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="text-muted">{{ block.lang }}</small>
+                    <span *ngIf="block.title" class="ms-3 fw-bold text-dark">{{ block.title }}</span>
+                  </div>
                 </div>
                 
                 <pre class="code-content"><code>{{ block.code }}</code></pre>
