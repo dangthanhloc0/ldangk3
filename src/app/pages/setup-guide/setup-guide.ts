@@ -116,15 +116,15 @@ export class SetupGuide implements OnInit, OnDestroy {
           this.translateService.instant('SETUP.STEP_4_DETAILS_10')
         ],
         images: [
-          { alt: 'Manage Realms - Click Create Realm', url: '/assets/images/img_2.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_1') },
-          { alt: 'Create Realm Dialog - Enter Name', url: '/assets/images/img_3.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_2') },
-          { alt: 'Realm Created Successfully', url: '/assets/images/img_5.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_3') },
-          { alt: 'Navigate to Clients Section', url: '/assets/images/img_6.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_4') },
-          { alt: 'Create Client Form', url: '/assets/images/img_7.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_5') },
-          // { alt: 'Client General Settings', url: '/assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_6') },
-          { alt: 'Capability Config - Enable Capabilities', url: '/assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_7') },
-          { alt: 'Login Settings - Configure URLs', url: '/assets/images/img_9.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_8') },
-          { alt: 'Credentials Tab - Copy Client Secret', url: '/assets/images/img_10.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_9') }
+          { alt: 'Manage Realms - Click Create Realm', url: 'assets/images/img_2.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_1') },
+          { alt: 'Create Realm Dialog - Enter Name', url: 'assets/images/img_3.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_2') },
+          { alt: 'Realm Created Successfully', url: 'assets/images/img_5.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_3') },
+          { alt: 'Navigate to Clients Section', url: 'assets/images/img_6.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_4') },
+          { alt: 'Create Client Form', url: 'assets/images/img_7.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_5') },
+          // { alt: 'Client General Settings', url: 'assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_6') },
+          { alt: 'Capability Config - Enable Capabilities', url: 'assets/images/img_8.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_7') },
+          { alt: 'Login Settings - Configure URLs', url: 'assets/images/img_9.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_8') },
+          { alt: 'Credentials Tab - Copy Client Secret', url: 'assets/images/img_10.png', caption: this.translateService.instant('SETUP.IMAGE_CAPTION_9') }
         ]
       },
       {
