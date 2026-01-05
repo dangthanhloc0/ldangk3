@@ -276,10 +276,10 @@ Tiếp tục dùng API
 
 ```bash
 # Clone repository
-git clone https://github.com/dangthanhloc0/KeyCloackLibary.git
+git clone https://github.com/dangthanhloc0/KeyCloackLibrary.git
 
 # Vào thư mục
-cd KeyCloackLibary
+cd KeyCloackLibrary
 
 # Build bằng Maven
 mvn clean install
