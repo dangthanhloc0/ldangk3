@@ -20,6 +20,7 @@
             "outputPath": "dist/keycloak-demo",
             "browser": "src/main.ts",
             "prerender": false,
+            "baseHref": "/ldangk3/",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
