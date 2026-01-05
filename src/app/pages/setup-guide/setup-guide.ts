@@ -94,6 +94,53 @@ export class SetupGuide implements OnInit, OnDestroy {
           {
             lang: 'xml',
             code: `<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-oauth2-client</artifactId>
+</dependency>
+<!-- Spring Boot Security -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+<!-- Web -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+<!-- Lombok -->
+<dependency>
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+  <optional>true</optional>
+</dependency>
+
+<!-- Validation -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+<dependency>
+  <groupId>org.springframework.security</groupId>
+  <artifactId>spring-security-oauth2-jose</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.fasterxml.jackson.core</groupId>
+  <artifactId>jackson-core</artifactId>
+  <version>2.15.2</version>
+</dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-json</artifactId>
+</dependency>
+
+<dependency>
   <groupId>org.ldang.keycloack</groupId>
   <artifactId>authz-core</artifactId>
   <version>1.0-SNAPSHOT</version>
