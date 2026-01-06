@@ -355,7 +355,7 @@ public ResponseEntity<?> getProtectedResource(
     // Token hợp lệ → trả về dữ liệu
     return ResponseEntity.ok(Map.of(
         "message", "Hello " + tokenInfo.getUsername(),
-        "userId", tokenInfo.getSubject()
+        "userId", tokenInfo.getSubjectUserId()
     ));
 }`,
         frontend: `async function validateToken(accessToken: string) {
@@ -444,8 +444,6 @@ public ResponseEntity<?> getTokenInfo(
     
     if (response.isSuccess()) {
         TokenInfoDTO info = response.getData();
-        // Use for logging, display, etc.
-        logger.info("Token belongs to user: " + info.getUsername());
         return ResponseEntity.ok(info);
     }
     
@@ -554,8 +552,8 @@ public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
     
     KCError error = response.getError();
     return ResponseEntity.status(400).body(Map.of(
-        "error": error.getCode(),
-        "message": error.getMessage()
+        "error", error.getCode(),
+        "message", error.getMessage()
     ));
 }`,
         frontend: `async function register(formData: RegisterFormData) {
@@ -1073,9 +1071,9 @@ public ResponseEntity<?> assignRealmRole(
     
     if (response.isSuccess()) {
         return ResponseEntity.ok(Map.of(
-            "message": "Role assigned",
-            "role": roleName,
-            "user": userId
+            "message", "Role assigned",
+            "role", roleName,
+            "user", userId
         ));
     }
     
@@ -1152,7 +1150,7 @@ public ResponseEntity<?> adminAction(
     String token = bearerToken.replace("Bearer ", "");
     TokenIntrospectionResponse tokenInfo = keycloakService.introspectToken(token);
     
-    String userId = tokenInfo.getSubject();
+    String userId = tokenInfo.getSubjectUserId();
     
     // Check if user has admin role
     if (keycloakService.userHasRealmRole(userId, "admin")) {
@@ -1347,9 +1345,9 @@ public ResponseEntity<?> removeRealmRole(
     
     if (response.isSuccess()) {
         return ResponseEntity.ok(Map.of(
-            "message": "Role removed",
-            "role": roleName,
-            "user": userId
+            "message", "Role removed",
+            "role", roleName,
+            "user", userId
         ));
     }
     
@@ -2108,7 +2106,7 @@ if (hasRole) {
       codeExample: {
         backend: `@GetMapping("/admin/users/{userId}/realm-roles")
 public ResponseEntity<?> getRealmRoles(@PathVariable String userId) {
-    List<RoleData> roles = keycloakService.getRealmRolesOfUser(userId);
+    List<String> roles = keycloakService.getRealmRolesOfUser(userId);
     
     return ResponseEntity.ok(Map.of(
         "userId", userId,
@@ -2180,7 +2178,7 @@ console.log('User realm roles:', realmRoles);`
       codeExample: {
         backend: `@GetMapping("/admin/users/{userId}/client-roles")
 public ResponseEntity<?> getClientRoles(@PathVariable String userId) {
-    Map<String, List<RoleData>> clientRoles = 
+    Map<String, List<String>> clientRoles = 
         keycloakService.getClientRolesOfUser(userId);
     
     return ResponseEntity.ok(clientRoles);
@@ -2304,14 +2302,13 @@ if (exists) {
       codeExample: {
         backend: `@GetMapping("/admin/roles/{roleName}")
 public ResponseEntity<?> getRealmRoleData(@PathVariable String roleName) {
-    try {
-        RoleData roleData = keycloakService.getRealmRoleData(roleName);
-        return ResponseEntity.ok(roleData);
-    } catch (Exception e) {
-        return ResponseEntity.status(404).body(
-            Map.of("error", "Role not found")
-        );
+    KCResponse<RealmRoleResponse> response = keycloakService.getRealmRoleData(roleName);
+    
+    if (response.isSuccess()) {
+        return ResponseEntity.ok(response.getData());
     }
+    
+    return ResponseEntity.status(404).body(response.getError());
 }`,
         frontend: `const response = await fetch(\`/admin/roles/admin\`, {
     headers: { 'Authorization': 'Bearer ' + getAdminToken() }
