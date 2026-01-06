@@ -347,6 +347,24 @@ import org.springframework.context.annotation.ComponentScan;
         images: [
           { alt: 'Add ComponentScan to Application Class', url: this.getAssetUrl('assets/images/img_11.png'), caption: this.translateService.instant('SETUP.IMAGE_CAPTION_10') }
         ]
+      },
+      {
+        id: 8,
+        title: this.translateService.instant('SETUP.STEP_8_TITLE'),
+        description: this.translateService.instant('SETUP.STEP_8_DESC'),
+        icon: '🔐',
+        completed: false,
+        details: [
+          this.translateService.instant('SETUP.STEP_8_DETAILS_1'),
+        ],
+        codeBlocks: [
+          {
+            lang: 'java',
+            title: 'Controller.java - Inject KeyCloakService',
+            code: `@Autowired
+private KeyCloakService keyCloakService;`
+          }
+        ]
       }
     ];
   }

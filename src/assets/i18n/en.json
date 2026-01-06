@@ -192,7 +192,10 @@
     "STEP_7_DETAILS_2": "Add @ComponentScan annotation with package names",
     "STEP_7_DETAILS_3": "Include 'org.ldang.keycloack' package for Keycloak library components",
     "STEP_7_DETAILS_4": "Include your application package (e.g., 'com.example.test') for Spring Boot scanning",
-    "IMAGE_CAPTION_10": "📸 Step 11: Add @ComponentScan annotation to your main Application class"
+    "IMAGE_CAPTION_10": "📸 Step 11: Add @ComponentScan annotation to your main Application class",
+    "STEP_8_TITLE": "Inject KeyCloakService",
+    "STEP_8_DESC": "Inject KeyCloakService into your Spring components",
+    "STEP_8_DETAILS_1": "Use @Autowired annotation to inject KeyCloakService in your controllers or services"
   },
   "NAVIGATION": {
     "HOME": "Home",
