@@ -133,7 +133,7 @@
     "STEP_2_DESC": "Clone Keycloak Library from GitHub",
     "STEP_2_DETAILS_1": "git clone https://github.com/dangthanhloc0/KeyCloackLibrary.git",
     "STEP_2_DETAILS_2": "cd KeyCloackLibrary",
-    "STEP_2_DETAILS_3": "mvn clean install -DskipTests -DSkipTests (to build Keycloak Library)",
+    "STEP_2_DETAILS_3": "mvn clean install -DskipTests (to build Keycloak Library)",
     "STEP_2_DETAILS_4": "Library will be installed to local Maven repository",
     "STEP_3_TITLE": "Install Keycloak Library",
     "STEP_3_DESC": "Install Keycloak Library into Spring Boot project",
