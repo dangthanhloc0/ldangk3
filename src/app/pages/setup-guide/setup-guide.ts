@@ -362,7 +362,7 @@ import org.springframework.context.annotation.ComponentScan;
             lang: 'java',
             title: 'Controller.java - Inject KeyCloakService',
             code: `@Autowired
-private KeyCloakService keyCloakService;`
+private KeyCloakService keycloakService;`
           }
         ]
       }
