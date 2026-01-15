@@ -120,6 +120,9 @@
   "SETUP": {
     "TITLE": "Setup Guide",
     "DESCRIPTION": "Setup Guide",
+    "VIDEO_TUTORIAL": "Video Tutorial",
+    "VIDEO_DESCRIPTION": "Watch this complete step-by-step video guide to help you successfully set up Keycloak integration with Spring Boot",
+    "WATCH_ON_YOUTUBE": "Watch video on YouTube",
     "PROGRESS_LABEL": "Progress",
     "STEPS_TITLE": "Setup Steps",
     "STEP_DETAILS_TITLE": "Step Details",

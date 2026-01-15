@@ -120,6 +120,9 @@
   "SETUP": {
     "TITLE": "Hướng Dẫn Cài Đặt",
     "DESCRIPTION": "Hướng Dẫn Cài Đặt",
+    "VIDEO_TUTORIAL": "Video Hướng Dẫn",
+    "VIDEO_DESCRIPTION": "Xem video hướng dẫn chi tiết từng bước để thiết lập tích hợp Keycloak với Spring Boot một cách thành công",
+    "WATCH_ON_YOUTUBE": "Xem video trên YouTube",
     "PROGRESS_LABEL": "Tiến Độ",
     "STEPS_TITLE": "Các Bước Cài Đặt",
     "STEP_DETAILS_TITLE": "Chi Tiết Bước",
